@@ -1,0 +1,5 @@
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/CMakeFiles/edit_cache.dir
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/Part01Core/CMakeFiles/Part01Core.dir
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/Part01Core/CMakeFiles/edit_cache.dir
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/Part01Core/CMakeFiles/rebuild_cache.dir
