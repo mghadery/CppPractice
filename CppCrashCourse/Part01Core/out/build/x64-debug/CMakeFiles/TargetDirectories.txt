@@ -1,5 +1,12 @@
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/CMakeFiles/Part01Core.dir
 C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/CMakeFiles/edit_cache.dir
 C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
-C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/Part01Core/CMakeFiles/Part01Core.dir
-C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/Part01Core/CMakeFiles/edit_cache.dir
-C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/Part01Core/CMakeFiles/rebuild_cache.dir
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/chap1_up/CMakeFiles/chap1_up.dir
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/chap1_up/CMakeFiles/edit_cache.dir
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/chap1_up/CMakeFiles/rebuild_cache.dir
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/chap2_types/CMakeFiles/chap2_types.dir
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/chap2_types/CMakeFiles/edit_cache.dir
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/chap2_types/CMakeFiles/rebuild_cache.dir
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/chap3_references/CMakeFiles/chap3_references.dir
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/chap3_references/CMakeFiles/edit_cache.dir
+C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/chap3_references/CMakeFiles/rebuild_cache.dir

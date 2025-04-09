@@ -11,15 +11,15 @@ endif()
 
 project ("Part01Core")
 
-add_executable (Part01Core "main.cpp" "chap2_types/chap2_types.cpp" "chap2_types/chap2_types.h")
-
+add_executable (Part01Core "main.cpp")
 
 # Include sub-projects.
 add_subdirectory ("chap1_up")
 add_subdirectory ("chap2_types")
+add_subdirectory ("chap3_references")
 
 # Link the chap1_up library to the Part01Core executable
-target_link_libraries(Part01Core chap1_up chap2_types)
+target_link_libraries(Part01Core chap1_up chap2_types chap3_references)
 
 #if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Part01Core PROPERTY CXX_STANDARD 20)

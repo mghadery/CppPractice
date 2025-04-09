@@ -6,6 +6,23 @@
 
 namespace chap2_types
 {
+	struct Person {
+		char firstname[100];
+		char lastname[100];
+
+		Person()
+		{
+			firstname[0] = 0;
+			lastname[0] = 0;
+		}
+
+		Person(const char* first, const char* last) {
+			std::strcpy(firstname, first);
+			std::strcpy(lastname, last);
+		}
+	};
+
+
 	void run()
 	{
 		printf("This is chapter 2: Types\n");
@@ -21,8 +38,8 @@ namespace chap2_types
 		printf("%lg\n", z);
 
 
-		//characters
-		char str1[]{'T', 'e', 's', 't', '1', '\n', '\0'};
+		//characters and strings
+		char str1[]{ 'T', 'e', 's', 't', '1', '\n', '\0' };
 		printf(str1);
 
 		std::u8string str2 = u8"تست 2";
@@ -51,6 +68,9 @@ namespace chap2_types
 		char str9[] = "تست";  //wrong!
 		char32_t str10[] = U"تست";
 		wchar_t str11[]{ L"Test_WCOUT" };
+		char16_t chinese[] = u"\u4e66\u4e2d\u81ea\u6709\u9ec4\u91d1\u5c4b";
+
+		wprintf(str6);
 
 		std::wcout << str6;  //does not print anything!
 		std::wcout << str7;  //does not print anything!
@@ -81,5 +101,48 @@ namespace chap2_types
 		int array1[4] = { 1, 2, 3, 4 };
 		int array2[20] = { 1, 2, 3, 4 };
 		int array3[]{ 1, 2, 3, 4 };
+
+		printf("Size of array: %zd\n", sizeof(array3) / sizeof(int));
+		printf("Size of array with std::size: %zd\n", std::size(array3));
+
+		//structs
+		Person person1 = Person("aa", "bb");
+		Person person2("cc", "dd");
+		Person person3{ "ee", "ff" };
+		Person persons[]{ person1 , person2 , person3, {"hh", "jj"}};
+		for (Person person : persons)
+		{
+			printf("First name: %s, Last name: %s\n", person.firstname, person.lastname);
+		}
+		person2 = person1;
+		//array does not change. It means it contains the copies
+		for (Person person : persons)
+		{
+			printf("First name: %s, Last name: %s\n", person.firstname, person.lastname);
+		}
+		persons[0] = person1;
+		persons[1] = person2;
+		persons[2] = person3;
+		for (Person person : persons)
+		{
+			printf("First name: %s, Last name: %s\n", person.firstname, person.lastname);
+		}
+
+		person2.firstname[0] = 'z';
+		printf("First name: %s, Last name: %s\n", person1.firstname, person1.lastname);
+		printf("First name: %s, Last name: %s\n", person2.firstname, person2.lastname);
+
+		char s1[] = "qwe";
+		char s2[] = "asd";
+		Person person4(s1, s2);
+		printf("First name: %s, Last name: %s\n", person4.firstname, person4.lastname);
+
+		Person person5;
+
+		int a(0);
+		int b();  //a function prototype
+		int c{};
+		int d = {};
+		int e;
 	}
 }

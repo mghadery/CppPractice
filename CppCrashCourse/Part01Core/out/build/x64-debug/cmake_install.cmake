@@ -34,7 +34,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/Part01Core/cmake_install.cmake")
+  include("C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/chap1_up/cmake_install.cmake")
+  include("C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/chap2_types/cmake_install.cmake")
+  include("C:/work/github/CppPractice/CppCrashCourse/Part01Core/out/build/x64-debug/chap3_references/cmake_install.cmake")
 
 endif()
 
