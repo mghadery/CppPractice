@@ -37,6 +37,42 @@ namespace chap4_lifecycle
 		}
 	};
 
+	struct NamedStruct
+	{
+		NamedStruct(const char *name):name(name)
+		{
+			printf("%s was constructed\n", name);
+		}
+
+		~NamedStruct()
+		{
+			printf("%s was destructed\n", name);
+		}
+
+	private:
+		const char* const name;
+	};
+
+	struct ExpTest
+	{
+		ExpTest(const char* name) :name(name)
+		{
+			printf("%s was constructed\n", name);
+			throw std::runtime_error{"constructor exeption"};
+			p = new char[100];
+		}
+
+		~ExpTest()
+		{
+			printf("%s was destructed\n", name);
+			delete[] p;
+		}
+
+	private:
+		const char* const name;
+		char* p;
+	};
+
 	//definition must be at lobal level and NOT inside a function
 	int MyMath::y = 4;
 	float MyMath::pi = 3.14;
@@ -87,5 +123,28 @@ namespace chap4_lifecycle
 
 		delete dptr1;
 		printf("after deallocation: %d\n", *dptr1);
+
+		printf("Exception handling\n");
+
+
+		try
+		{
+			NamedStruct namedStruct1 = NamedStruct{ "local NamedStruct" };  //when exception occurs, its destructor is called automatically
+			NamedStruct* namedStruct2 = new NamedStruct{ "dynamic NamedStruct" };  //when exception occurs, its destructor is NOT called automatically
+			throw std::runtime_error{"This is a pretty exception\n"};
+		}
+		catch (const std::runtime_error& exp)
+		{
+			printf("Exception ocuured: %s\n", exp.what());
+		}
+
+		try
+		{
+			ExpTest exp1 = ExpTest{ "local ExpTest" };  //as the exception occurs in the constructor, the destructor won't be invoked
+		}
+		catch (const std::runtime_error& exp)
+		{
+			printf("Exception ocuured: %s\n", exp.what());
+		}
 	}
 }
