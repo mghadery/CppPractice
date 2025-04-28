@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <iostream>
 #include <cstddef>
+#include <vector>
 
 
 //Both static and extern variables live for the entire lifetime of the program,
@@ -72,6 +73,101 @@ namespace chap4_lifecycle
 		const char* const name;
 		char* p;
 	};
+
+
+	struct SimpleString {
+		SimpleString(size_t max_size)
+			: max_size{ max_size },
+			length{} {
+			printf("SimpleString constructor\n");
+			if (max_size == 0) {
+				throw std::runtime_error{ "Max size must be at least 1." };
+			}
+			buffer = new char[max_size];
+			buffer[0] = 0;
+		}
+		~SimpleString() {
+			printf("SimpleString destructor\n");
+			delete[] buffer; //it can lead to errors wgen the object is copied and the first object constructor is called
+		}
+
+		void print(const char *s)
+		{
+			printf("%s%s\n", s, buffer);
+		}
+
+		bool append_line(const char* x) {
+			const auto x_len = strlen(x);
+			if (x_len + length + 2 > max_size) return false;
+			std::strncpy(buffer + length, x, max_size - length);
+			length += x_len;
+			buffer[length++] = '\n';
+			buffer[length] = 0;
+			return true;
+		}
+	private:
+		size_t max_size;
+		char* buffer;
+		size_t length;
+	};
+
+	//RAII concept:
+	//resources are allocated in constructor
+	//resources are released in destructor
+	//On error exception is thrown
+	//after exception stack unwinding occurs and all resources in inner functions are released
+	struct SimpleStringOwner {
+		SimpleStringOwner(const char* x)
+			: string{ 10 } {
+			if (!string.append_line(x)) {
+				throw std::runtime_error{ "Not enough memory!" };
+			}
+			string.print("Constructed: ");
+		}
+		~SimpleStringOwner() {
+			string.print("About to destroy: ");
+		}
+	private:
+		SimpleString string;
+	};
+
+
+	struct SimpleStringOwner2 {
+		SimpleStringOwner2(const char* x)
+			: string{ 10 } {
+			isValid = string.append_line(x);
+			string.print("Constructed: ");
+		}
+		~SimpleStringOwner2() {
+			string.print("About to destroy: ");
+		}
+		bool IsValid() {
+			return isValid;
+		}
+	private:
+		SimpleString string;
+		bool isValid;
+	};
+
+	struct Owner2Result {
+		SimpleStringOwner2 Sto;
+		bool Result;
+	};
+
+	//It is problematic because of copying SimpleString object and potential destructing the first one on exit
+	//Either a copy constructor must be defined or cleanup is done manually outside destructor.
+	Owner2Result makeOwner2() {
+		//SimpleStringOwner2 sto{ "01234567890x" };
+		SimpleStringOwner2 sto{ "x" };
+		return Owner2Result{ sto, sto.IsValid() };
+	}
+
+	//DANGEROUS: If copy optimization does not occur, x buffer is released on return
+	SimpleString GiveStr() {
+		SimpleString x{ 10 };
+		x.append_line("test");
+		return x;
+	}
 
 	//definition must be at lobal level and NOT inside a function
 	int MyMath::y = 4;
@@ -146,5 +242,70 @@ namespace chap4_lifecycle
 		{
 			printf("Exception ocuured: %s\n", exp.what());
 		}
+
+		try
+		{
+			char x = 222;
+			char y = 2 * x; //no exception!
+			char z = x;			
+		}
+		catch (const std::overflow_error& exp)
+		{
+			printf("Exception ocuured: %s\n", exp.what());
+		}
+
+		try
+		{
+			int x[]{ 1, 2 };
+			printf("x[0]: %d\n", x[0]);
+			printf("x[1]: %d\n", x[1]);
+			printf("x[2]: %d\n", x[2]); //no exception!
+
+			std::vector<int> v{ 1, 2 };
+			printf("v[0]: %d\n", v.at(0));
+			printf("v[1]: %d\n", v.at(1));
+			
+			//printf("v[2]: %d\n", v[2]);    //no exception but crash!
+
+			printf("v[2]: %d\n", v.at(2)); //exception!
+
+		}
+		catch (const std:: out_of_range exp)
+		{
+			printf("Exception ocuured: %s\n", exp.what());
+		}
+
+		try
+		{
+			throw std::exception("General exception\n");
+		}
+		catch (...)
+		{
+			printf("Unknown error...\n");
+		}
+
+		try {
+			SimpleStringOwner sto{ "x" };
+		}
+		catch (const std::exception& exp) {
+			printf("exp: %s\n", exp.what());
+		}
+
+		try {
+			SimpleStringOwner sto{ "01234567890x" }; //~SimpleStringOwner does not execute but ~SimpleString executes
+		}
+		catch (const std::exception& exp) {
+			printf("exp: %s\n", exp.what());
+		}
+
+		auto y = GiveStr();
+
+		//the following leads to crash because of double deleting buffer
+		/*auto [sto, result] = makeOwner2();
+		if (result)
+			printf("owner2 created\n");
+		else
+			printf("owner2 failed to create\n");*/
+
 	}
 }
