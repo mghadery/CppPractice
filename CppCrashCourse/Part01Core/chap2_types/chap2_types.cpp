@@ -39,6 +39,8 @@ namespace chap2_types
 
 
 		//characters and strings
+		const char* s = "old سstyle\n";
+		printf(s);
 		char str1[]{ 'T', 'e', 's', 't', '1', '\n', '\0' };
 		printf(str1);
 
@@ -109,17 +111,19 @@ namespace chap2_types
 		Person person1 = Person("aa", "bb");
 		Person person2("cc", "dd");
 		Person person3{ "ee", "ff" };
-		Person persons[]{ person1 , person2 , person3, {"hh", "jj"}};
+		Person persons[]{ person1 , person2 , person3, {"hh", "jj"} };
 		for (Person person : persons)
 		{
 			printf("First name: %s, Last name: %s\n", person.firstname, person.lastname);
 		}
+		printf("person2 = person1;\n");
 		person2 = person1;
 		//array does not change. It means it contains the copies
 		for (Person person : persons)
 		{
 			printf("First name: %s, Last name: %s\n", person.firstname, person.lastname);
 		}
+		printf("persons[0] = person1;\n");
 		persons[0] = person1;
 		persons[1] = person2;
 		persons[2] = person3;
@@ -128,6 +132,7 @@ namespace chap2_types
 			printf("First name: %s, Last name: %s\n", person.firstname, person.lastname);
 		}
 
+		printf("person2.firstname[0] = 'z';\n");
 		person2.firstname[0] = 'z';
 		printf("First name: %s, Last name: %s\n", person1.firstname, person1.lastname);
 		printf("First name: %s, Last name: %s\n", person2.firstname, person2.lastname);
@@ -142,7 +147,21 @@ namespace chap2_types
 		int a(0);
 		int b();  //a function prototype
 		int c{};
+		printf("c:%d\n", c);
 		int d = {};
+		printf("d:%d\n", d);
 		int e;
+		try
+		{
+			//printf("e:%d\n", e);  //it is not an exception! as there is no throw!
+		}
+		catch (const std::exception& e)
+		{
+			printf("Exception: %s\n", e.what());
+		}
+		catch (...)
+		{
+			printf("Ooops\n");
+		}
 	}
 }

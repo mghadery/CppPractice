@@ -18,7 +18,7 @@ namespace chap3_references
 
 	public:
 		Clock() {}
-		//using this ponter
+		//using this pointer
 		Clock(int hour) :sec{ 0 }
 		{
 			this->hour = hour;

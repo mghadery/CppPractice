@@ -25,6 +25,8 @@ namespace chap4_lifecycle
 		//integral const types are exceptions
 		static const int pi_rounded = 3;
 
+		float zzz = 1.2;
+
 		const int x = 1;
 
 		void change_pi()
@@ -86,9 +88,17 @@ namespace chap4_lifecycle
 			buffer = new char[max_size];
 			buffer[0] = 0;
 		}
+		SimpleString(const SimpleString& other)
+			:max_size{ other.max_size },
+			length{ other.length },
+			buffer{ new char[other.max_size] }
+		{
+			strncpy(buffer, other.buffer, other.max_size);
+		}
+
 		~SimpleString() {
 			printf("SimpleString destructor\n");
-			delete[] buffer; //it can lead to errors wgen the object is copied and the first object constructor is called
+			delete[] buffer; //it can lead to errors when the object is copied and the first object constructor is called
 		}
 
 		void print(const char *s)
@@ -169,7 +179,7 @@ namespace chap4_lifecycle
 		return x;
 	}
 
-	//definition must be at lobal level and NOT inside a function
+	//definition must be at global level and NOT inside a function
 	int MyMath::y = 4;
 	float MyMath::pi = 3.14;
 
@@ -197,11 +207,12 @@ namespace chap4_lifecycle
 		MyMath myMath2;
 		printf("myMath.pi: %g\n", myMath.pi);
 
+		printf("myMath.change_pi();\n");
 		myMath.change_pi();
 		printf("MyMath::pi:%g\n", MyMath::pi);
 		printf("myMath.pi: %g\n", myMath.pi);
 
-
+		printf("MyMath::change_pi_s();\n");
 		MyMath::change_pi_s();
 		printf("MyMath::pi:%g\n", MyMath::pi);
 		printf("myMath.pi: %g\n", myMath.pi);
@@ -217,7 +228,7 @@ namespace chap4_lifecycle
 		dptr1 = new int[4] {1};
 		printf("after array allocation: %d\n", *dptr1);
 
-		delete dptr1;
+		delete[] dptr1;
 		printf("after deallocation: %d\n", *dptr1);
 
 		printf("Exception handling\n");
@@ -257,9 +268,12 @@ namespace chap4_lifecycle
 		try
 		{
 			int x[]{ 1, 2 };
+			printf("arry out of range\n");
 			printf("x[0]: %d\n", x[0]);
 			printf("x[1]: %d\n", x[1]);
 			printf("x[2]: %d\n", x[2]); //no exception!
+
+			printf("vector out of range\n");
 
 			std::vector<int> v{ 1, 2 };
 			printf("v[0]: %d\n", v.at(0));
@@ -284,6 +298,7 @@ namespace chap4_lifecycle
 			printf("Unknown error...\n");
 		}
 
+		printf("SimpleStringOwner sto{ 'x' }\n");
 		try {
 			SimpleStringOwner sto{ "x" };
 		}
@@ -291,6 +306,7 @@ namespace chap4_lifecycle
 			printf("exp: %s\n", exp.what());
 		}
 
+		printf("SimpleStringOwner sto{ '01234567890x' }\n");
 		try {
 			SimpleStringOwner sto{ "01234567890x" }; //~SimpleStringOwner does not execute but ~SimpleString executes
 		}
@@ -300,12 +316,26 @@ namespace chap4_lifecycle
 
 		auto y = GiveStr();
 
+		printf("Crash:\n");
 		//the following leads to crash because of double deleting buffer
-		/*auto [sto, result] = makeOwner2();
-		if (result)
-			printf("owner2 created\n");
-		else
-			printf("owner2 failed to create\n");*/
+		//first delete after the copy
+		//second delete on exiting out of run() 
+		//auto [sto, result] = makeOwner2();
+		//if (result)
+		//	printf("owner2 created\n");
+		//else
+		//	printf("owner2 failed to create\n");
+
+
+		printf("Copy constructor");
+		SimpleString ss1{ 100 };
+		ss1.append_line("First line");
+		auto ss2{ ss1 };
+		ss2.append_line("Second line");
+		ss1.print("ss1:");
+		ss2.print("ss2:");
+
+		printf("End\n");
 
 	}
 }
