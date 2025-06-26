@@ -96,6 +96,17 @@ namespace chap4_lifecycle
 			strncpy(buffer, other.buffer, other.max_size);
 		}
 
+		SimpleString& operator=(const SimpleString& other)
+		{
+			max_size = other.max_size;
+			length = other.length;
+			delete[] buffer;
+
+			buffer = new char[other.max_size];			
+			strncpy(buffer, other.buffer, other.max_size);
+			return *this;
+		}
+
 		~SimpleString() {
 			printf("SimpleString destructor\n");
 			delete[] buffer; //it can lead to errors when the object is copied and the first object constructor is called
@@ -327,13 +338,18 @@ namespace chap4_lifecycle
 		//	printf("owner2 failed to create\n");
 
 
-		printf("Copy constructor");
+		printf("Copy constructor\n");
 		SimpleString ss1{ 100 };
 		ss1.append_line("First line");
 		auto ss2{ ss1 };
 		ss2.append_line("Second line");
 		ss1.print("ss1:");
 		ss2.print("ss2:");
+
+		printf("Copy assignment\n");
+		SimpleString ss3 = ss2;
+		ss3.append_line("Third line");
+		ss3.print("ss3:");
 
 		printf("End\n");
 
