@@ -96,14 +96,40 @@ namespace chap4_lifecycle
 			strncpy(buffer, other.buffer, other.max_size);
 		}
 
+		SimpleString(SimpleString&& other) noexcept
+			:max_size{ other.max_size },
+			length{ other.length },
+			buffer{ other.buffer }
+		{
+			other.max_size = 0;
+			other.length = 0;
+			other.buffer = nullptr;
+		}
+
 		SimpleString& operator=(const SimpleString& other)
 		{
+			if (this == &other) return *this;
 			max_size = other.max_size;
 			length = other.length;
 			delete[] buffer;
 
 			buffer = new char[other.max_size];			
 			strncpy(buffer, other.buffer, other.max_size);
+			return *this;
+		}
+
+		SimpleString& operator=(SimpleString&& other) noexcept
+		{
+			if (this == &other) return *this;
+			delete[] buffer;
+			max_size = other.max_size;
+			length = other.length;
+			buffer = other.buffer;
+
+			other.max_size = 0;
+			other.length = 0;
+			other.buffer = nullptr;
+
 			return *this;
 		}
 
@@ -295,8 +321,10 @@ namespace chap4_lifecycle
 			printf("v[2]: %d\n", v.at(2)); //exception!
 
 		}
-		catch (const std:: out_of_range exp)
+		//catch (const std:: out_of_range& exp)
+		catch(const std::exception& exp)
 		{
+			printf("Exception type: %s\n", typeid(exp).name());
 			printf("Exception ocuured: %s\n", exp.what());
 		}
 
@@ -351,7 +379,18 @@ namespace chap4_lifecycle
 		ss3.append_line("Third line");
 		ss3.print("ss3:");
 
-		printf("End\n");
+		printf("move constructor\n");
+		SimpleString ss4{ 100 };
+		ss4.append_line("First line");
+		auto ss5{ std::move(ss4)};
+		ss4.print("ss4:");
+		ss5.print("ss5:");
 
+		printf("Move assignment\n");
+		auto ss6 = std::move(ss5);
+		ss5.print("ss5:");
+		ss6.print("ss6:");
+
+		printf("End\n");
 	}
 }

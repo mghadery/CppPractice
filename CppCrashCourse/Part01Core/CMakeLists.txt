@@ -11,7 +11,7 @@ endif()
 
 project ("Part01Core")
 
-add_executable (Part01Core "main.cpp")
+add_executable (Part01Core "main.cpp" "chap5_rt_pm/chap5_rt_pm.cpp" "chap5_rt_pm/chap5_rt_pm.h")
 
 # Include sub-projects.
 add_subdirectory ("chap1_up")

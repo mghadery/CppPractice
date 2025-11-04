@@ -9,14 +9,16 @@
 #include "chap2_types/chap2_types.h"
 #include "chap3_references//chap3_references.h"
 #include "chap4_lifecycle/chap4_lifecycle.h"
+#include "chap5_rt_pm/chap5_rt_pm.h"
 
 enum class Chapters {
 	chap1_up,
 	chap2_types,
 	chap3_references,
-	chap4_lifecycle
+	chap4_lifecycle,
+	chap5_rt_pm
 };
-const Chapters chapter = Chapters::chap4_lifecycle;
+const Chapters chapter = Chapters::chap5_rt_pm;
 
 int main()
 {
@@ -36,6 +38,9 @@ int main()
 	}break;
 	case Chapters::chap4_lifecycle: {
 		chap4_lifecycle::run();
+	}break;
+	case Chapters::chap5_rt_pm: {
+		chap5_rt_pm::run();
 	}break;
 	}
 	
