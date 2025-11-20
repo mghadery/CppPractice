@@ -17,7 +17,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_uimodeBut_clicked();
+
 private:
     Ui::MainWindow *ui;
+    bool darkmode;
+    void refresh_mode();
 };
 #endif // MAINWINDOW_H
