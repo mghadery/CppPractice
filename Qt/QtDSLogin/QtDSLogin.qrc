@@ -1,0 +1,17 @@
+<RCC>
+    <qresource>
+        <file>QtDSLogin.qmlproject</file>
+        <file>QtDSLogin/Constants.qml</file>
+        <file>QtDSLogin/EventListModel.qml</file>
+        <file>QtDSLogin/EventListSimulator.qml</file>
+        <file>QtDSLogin/qmldir</file>
+        <file>QtDSLoginContent/App.qml</file>
+        <file>QtDSLoginContent/images/back.jpg</file>
+        <file>QtDSLoginContent/images/panda.png</file>
+        <file>QtDSLoginContent/images/restart.png</file>
+        <file>QtDSLoginContent/images/shutdown.png</file>
+        <file>QtDSLoginContent/Main.ui.qml</file>
+        <file>QtDSLoginContent/Screen01.ui.qml</file>
+        <file>qtquickcontrols2.conf</file>
+    </qresource>
+</RCC>
