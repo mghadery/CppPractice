@@ -1,0 +1,8 @@
+﻿  Ring.cpp
+  RingDoc.cpp
+  RingView.cpp
+  Generating Code...
+C:\work\github\CppPractice\MFC\Ring\Ring\RingView.cpp(63,8): warning C4244: 'initializing': conversion from 'INT_PTR' to 'int', possible loss of data
+  (compiling source file '/RingView.cpp')
+  
+  Ring.vcxproj -> C:\work\github\CppPractice\MFC\Ring\x64\Debug\Ring.exe
